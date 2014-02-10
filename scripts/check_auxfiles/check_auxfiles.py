@@ -2,7 +2,7 @@
 #For Pumilio 2.2.1 and recent
 
 """
-v. 2.2.1a (7 Jun 2012)
+v. 2.2.1b (10 Feb 2014)
 Script to create mp3 and png files of sound files in flac format for Pumilio from the 
  records in the database.
  Edit the file configfile.py.dist with the appropiate values and save it as configfile.py
@@ -636,7 +636,7 @@ def getallsounds():
 	con.close ()
 	return results
 	
-def getmax_freq():
+def getmax_freq(nyquist):
 	#Open MySQL
 	try:
 		con = MySQLdb.connect(host=db_hostname, user=db_username, passwd=db_password, db=db_database)
@@ -648,12 +648,16 @@ def getmax_freq():
 	cursor.execute (query)
 	if cursor.rowcount == 1:
 		result = cursor.fetchone()
-		result = int(result[0])
+		if result[0] == "max":
+			result = nyquist
+		else:
+			result = int(result[0])			
 	else:
 		result = 0
 	cursor.close ()
 	con.close ()
 	return result
+
 
 
 def getspectrogram_palette():
@@ -887,7 +891,7 @@ def write_log(SoundID, ColID, DirID, filename, error_msg):
 #########################################################################
 
 #Get max sampling rate to draw
-max_freq_draw=getmax_freq()
+#max_freq_draw=getmax_freq()
 
 #Get spectrogram palette
 spectrogram_palette = getspectrogram_palette()
@@ -931,8 +935,14 @@ try:
 			with Ticker("\n Extracting file from flac " + ColID + "/" + DirID + "/" + item_flac + " (ID: " + SoundID + ")"):
 				item_wav = extractflac(server_dir + 'sounds/' + ColID + '/' + DirID + '/' + item_flac, item_flac)
 				#Check if stereo
-				no_channels = checkifstereo(item_wav)
-				status, sampling_rate = commands.getstatusoutput('soxi -r ' + item_wav)
+			
+			#Check if stereo
+			no_channels = checkifstereo(item_wav)
+			status, sampling_rate = commands.getstatusoutput('soxi -r ' + item_wav)
+
+			nyquist = int(sampling_rate) / 2
+			#Get max sampling rate to draw
+			max_freq_draw=getmax_freq(nyquist)
 
 			with Ticker("\n Generating images..."):
 				if no_channels == 2:

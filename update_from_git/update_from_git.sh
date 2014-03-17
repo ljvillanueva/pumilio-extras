@@ -1,4 +1,10 @@
 #!/bin/bash
+# 17 Mar 2014
+
+# update_from_git.sh
+
+# For more details: http://ljvillanueva.github.io/pumilio/
+
 #Script that downloads the last version of Pumilio from the git repo and updates the files in the local server.
 # Please note that the git code may be broken or in the process of being changed. Always backup before an update.
 # The script assumes it is in the parent directory of the git repo and that it exists already.

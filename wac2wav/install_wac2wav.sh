@@ -4,11 +4,6 @@
 # Wildlife Acoustics.
 # 
 
-# Set the path where Pumilio will be installed inside /var/www/
-# If "/var/www/pumilio", then set pumiliodir="pumilio" without trailing slash
-
-pumiliodir="pumilio"
-
 # Then, run as sudo:
 #	sudo ./install_wac2wav.sh
 

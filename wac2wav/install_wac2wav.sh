@@ -4,7 +4,7 @@
 # Wildlife Acoustics.
 # 
 
-# Then, run as sudo:
+# Run the script as sudo:
 #	sudo ./install_wac2wav.sh
 
 #=================================================
@@ -18,7 +18,7 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 #check if gcc is installed
-if ! type "__gcc" > /dev/null; then
+if ! type "gcc" > /dev/null; then
 	echo ""
 	echo "gcc not found. Please install compiler using:"
 	echo " sudo apt-get install build-essential"
@@ -29,8 +29,8 @@ fi
 #Random dir
 tmpdir=$RANDOM
 
-mkdir /tmp/$tmpdir
-cd /tmp/$tmpdir
+mkdir $tmpdir
+cd $tmpdir
 
 echo " Downloading source..."
 echo " "
@@ -51,3 +51,5 @@ echo " "
 
 cp wac2wavcmd /usr/local/bin/
 
+cd ../../
+rm -r $tmpdir

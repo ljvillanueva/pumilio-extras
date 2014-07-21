@@ -1,0 +1,17 @@
+#Fill the values for MySQL
+db_hostname=''
+db_username=''
+db_password=''
+
+#Where should the data be migrated FROM
+# Name of database and location of each Pumilio installation,
+# with trailing slash.
+# For example: '/var/www/pumilio/' or '/mnt/server/pumilio/'
+# Must have at least two, separated with a comma. Each database name
+# and location pair must be inside a parenthesis.
+pum_installations = dict([('pumilio_db1', '/var/www/pumilio1/'), ('pumilio_db2', '/var/www/pumilio2/')])
+
+#Where should the data be migrated TO
+# Must only specify one
+pum_target = dict([('pumilio_db1', '/var/www/pumilio1/')])
+
